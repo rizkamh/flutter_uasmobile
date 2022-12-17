@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_uasmobile/api/http_helper.dart';
 import 'package:flutter_uasmobile/components/check_have%20_account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import '../api/http_helper.dart';
@@ -20,29 +21,29 @@ class _Login extends State<Login> {
   TextEditingController etEmail = TextEditingController();
   TextEditingController etPassword = TextEditingController();
 
-  // Future doLogin() async {
-  //   final email = etEmail.text;
-  //   final password = etPassword.text;
-  //   const deviceId = "12345";
-  //   final response = await HttpHelper().login(email, password, deviceId);
-  //   print(response.body);
+  Future doLogin() async {
+    final email = etEmail.text;
+    final password = etPassword.text;
+    const deviceId = "12345";
+    final response = await HttpHelper().login(email, password, deviceId);
+    print(response.body);
 
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   const key = 'token';
-  //   final value = pref.get(key);
-  //   final token = value;
-  //   if (token == null) {
-  //     Navigator.pushNamed(
-  //       context,
-  //       '/login',
-  //     );
-  //   } else {
-  //     Navigator.pushNamed(
-  //       context,
-  //       '/home',
-  //     );
-  //   }
-  // }
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    if (token == null) {
+      Navigator.pushNamed(
+        context,
+        '/login',
+      );
+    } else {
+      Navigator.pushNamed(
+        context,
+        '/home',
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class _Login extends State<Login> {
                   height: 10,
                 ),
                 Text(
-                  'LOGIN',
+                  'Stisla',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 50,
@@ -197,7 +198,7 @@ class _Login extends State<Login> {
                         ),
                       ),
                       onPressed: () async {
-                        // await doLogin();
+                        await doLogin();
                       },
                       child: const Text(
                         "Login",

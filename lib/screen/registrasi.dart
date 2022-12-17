@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_uasmobile/api/http_helper.dart';
 
 import '../components/check_have _account.dart';
 import '../screen/login.dart';
@@ -18,20 +19,20 @@ class _Register extends State<Register> {
   TextEditingController etEmail = TextEditingController();
   TextEditingController etPassword = TextEditingController();
 
-  // doRegister() async {
-  //   final name = etName.text;
-  //   final email = etEmail.text;
-  //   final password = etPassword.text;
-  //   const deviceId = "12345";
-  //   final response =
-  //       await HttpHelper().register(name, email, password, deviceId);
-  //   print(response.body);
+  doRegister() async {
+    final name = etName.text;
+    final email = etEmail.text;
+    final password = etPassword.text;
+    const deviceId = "12345";
+    final response =
+        await HttpHelper().register(name, email, password, deviceId);
+    print(response.body);
 
-  //   Navigator.pushNamed(
-  //     context,
-  //     '/login',
-  //   );
-  // }
+    Navigator.pushNamed(
+      context,
+      '/login',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _Register extends State<Register> {
                   width: 130,
                 ),
                 Text(
-                  'REGISTER',
+                  'Stisla',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 50,
@@ -223,7 +224,7 @@ class _Register extends State<Register> {
                         ),
                       ),
                       onPressed: () {
-                        // doRegister();
+                        doRegister();
                       },
                       child: const Text(
                         "Register",
