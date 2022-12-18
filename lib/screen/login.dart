@@ -48,21 +48,21 @@ class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red.shade50,
+      backgroundColor: Colors.pink.shade50,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
             flex: 3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image.asset(
-                  'assets/login.png',
-                  width: 180,
-                ),
+                // Image.asset(
+                //   'assets/login.png',
+                //   width: 180,
+                // ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Text(
                   'Stisla',
@@ -83,7 +83,7 @@ class _Login extends State<Login> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 5,
             child: ListView(
               children: [
                 Padding(
@@ -117,7 +117,7 @@ class _Login extends State<Login> {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1.5,
-                          color: Colors.red.shade100,
+                          color: Colors.pink.shade100,
                         ),
                         borderRadius: BorderRadius.circular(50),
                       ),

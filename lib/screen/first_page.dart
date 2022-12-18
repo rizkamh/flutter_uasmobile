@@ -34,8 +34,8 @@ class _Firstpage extends State<FirstPage> {
                 0.6,
               ],
               colors: [
-                Color.fromARGB(255, 221, 197, 205),
-                Color.fromARGB(255, 151, 38, 74),
+                Color.fromARGB(255, 247, 242, 243),
+                Colors.pinkAccent,
               ]),
         ),
         width: double.infinity,
@@ -45,13 +45,13 @@ class _Firstpage extends State<FirstPage> {
           children: [
             CircleAvatar(
               radius: 150,
-              backgroundColor: Colors.pinkAccent,
+              backgroundColor: Colors.white,
               child: Text(
                 'Stisla',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 90,
-                  color: Colors.white,
+                  color: Colors.pinkAccent,
                   shadows: [
                     Shadow(
                       color: Color.fromARGB(255, 228, 216, 216),

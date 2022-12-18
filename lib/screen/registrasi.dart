@@ -45,10 +45,10 @@ class _Register extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image.asset(
-                  'assets/registrasi.png',
-                  width: 130,
-                ),
+                // Image.asset(
+                //   'assets/registrasi.png',
+                //   width: 130,
+                // ),
                 Text(
                   'Stisla',
                   style: TextStyle(
