@@ -90,55 +90,14 @@ class _Home extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 25),
-                  child: Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 32,
-                      fontFamily: 'Raleway',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Welcome $name',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        fontFamily: 'Raleway',
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          email,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            fontFamily: 'Raleway',
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.topRight,
                         child: IconButton(
                           icon: const Icon(
                             Icons.logout_sharp,
@@ -155,6 +114,22 @@ class _Home extends State<Home> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Welcome $name',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 35,
+                        fontFamily: 'Raleway',
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -218,7 +193,7 @@ class _Home extends State<Home> {
                   return Dismissible(
                     key: UniqueKey(),
                     background: Container(
-                      color: Colors.greenAccent,
+                      color: Color.fromARGB(255, 96, 202, 151),
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: Row(
@@ -232,7 +207,7 @@ class _Home extends State<Home> {
                       ),
                     ),
                     secondaryBackground: Container(
-                      color: Colors.pinkAccent,
+                      color: Colors.red,
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: Row(
@@ -263,7 +238,7 @@ class _Home extends State<Home> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       decoration: BoxDecoration(
-                        color: Colors.purple.shade50,
+                        color: Colors.pink.shade50,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(10),
                         ),
