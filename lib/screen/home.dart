@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_uasmobile/components/category_models.dart';
+import 'package:flutter_uasmobile/screen/edit_category.dart';
 
-// import '../api/http_helper.dart';
+import '../api/http_helper.dart';
+import '../api/category_service.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,6 +20,7 @@ class _Home extends State<Home> {
   String name = '';
   String email = '';
   List listCategory = [];
+  TextEditingController etCategory = TextEditingController();
 
   getPref() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -35,22 +37,31 @@ class _Home extends State<Home> {
     });
   }
 
-  // getKategori() async {
-  //   final response = await HttpHelper().getKategori();
-  //   var dataResponse = jsonDecode(response.body);
-  //   setState(() {
-  //     var listRespon = dataResponse['data'];
-  //     for (var i = 0; i < listRespon.length; i++) {
-  //       listCategory.add(Category.fromJson(listRespon[i]));
-  //     }
-  //   });
-  // }
+  getKategori() async {
+    final response = await HttpHelper().getKategori();
+    var dataResponse = jsonDecode(response.body);
+    setState(() {
+      var listRespon = dataResponse['data'];
+      for (var i = 0; i < listRespon.length; i++) {
+        listCategory.add(Category.fromJson(listRespon[i]));
+      }
+    });
+  }
+
+  doAddCategory() async {
+    final name = etCategory.text;
+    final response = await CategoryService().addCategory(name);
+    print(response.body);
+    listCategory.clear();
+    getKategori();
+    etCategory.clear();
+  }
 
   @override
   void initState() {
     getPref();
     super.initState();
-    // getKategori();
+    getKategori();
   }
 
   logOut() async {
@@ -59,20 +70,20 @@ class _Home extends State<Home> {
       preferences.remove("token");
       preferences.clear();
     });
-    // final response = await HttpHelper().logout(token);
-    // print(response.body);
+    final response = await HttpHelper().logout(token);
+    print(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.pinkAccent.shade400,
+      backgroundColor: Colors.pinkAccent.shade200,
       body: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.pinkAccent.shade400,
+              color: Colors.pinkAccent.shade200,
             ),
             height: 180,
             child: Column(
@@ -86,15 +97,8 @@ class _Home extends State<Home> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
-                      fontSize: 29,
+                      fontSize: 32,
                       fontFamily: 'Raleway',
-                      shadows: [
-                        Shadow(
-                          color: Colors.red.shade300,
-                          blurRadius: 6,
-                          offset: const Offset(4.0, 4.0),
-                        ),
-                      ],
                     ),
                   ),
                 ),
@@ -110,13 +114,6 @@ class _Home extends State<Home> {
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
                         fontFamily: 'Raleway',
-                        shadows: [
-                          Shadow(
-                            color: Colors.red.shade300,
-                            blurRadius: 6,
-                            offset: const Offset(4.0, 4.0),
-                          ),
-                        ],
                       ),
                     ),
                   ),
@@ -166,10 +163,49 @@ class _Home extends State<Home> {
           const SizedBox(
             height: 20,
           ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: TextFormField(
+              controller: etCategory,
+              decoration: InputDecoration(
+                hintText: "Input Your Categories Name",
+                hintStyle: const TextStyle(fontFamily: 'Raleway'),
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: const BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                suffixIcon: Container(
+                  margin: const EdgeInsets.fromLTRB(0, 8, 12, 8),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pinkAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    child: const Text("Add"),
+                    onPressed: () {
+                      doAddCategory();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.purple.shade50,
+                color: Colors.pink.shade50,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10.0),
                   topLeft: Radius.circular(10.0),
@@ -210,6 +246,20 @@ class _Home extends State<Home> {
                         ),
                       ),
                     ),
+                    onDismissed: (DismissDirection direction) async {
+                      if (direction == DismissDirection.startToEnd) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  editCategory(category: listCategory[index]),
+                            ));
+                      } else {
+                        final response = await HttpHelper()
+                            .deleteCategory(listCategory[index]);
+                        print(response.body);
+                      }
+                    },
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       decoration: BoxDecoration(

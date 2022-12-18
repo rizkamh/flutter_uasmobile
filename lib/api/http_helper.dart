@@ -4,9 +4,10 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_uasmobile/components/category_models.dart';
 
 class HttpHelper {
-  final String _baseUrl = 'http://192.168.20.192:8000/api/';
+  final String _baseUrl = 'http://192.168.43.161:8000/api/';
   // final String _baseUrl = 'http://10.0.2.2:8000/api/';
   final String token = '';
 
@@ -75,8 +76,6 @@ class HttpHelper {
 
   _save(String key, String data) async {
     final prefs = await SharedPreferences.getInstance();
-    // const key = 'token';
-    // final value = token;
     prefs.setString(key, data);
   }
 
@@ -85,5 +84,60 @@ class HttpHelper {
     const key = 'token';
     final value = prefs.get(key) ?? 0;
     print('read : $value');
+  }
+
+  Future<Response> requestAddCategory(String name) async {
+    var url = Uri.parse(_baseUrl + 'category');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final response = await post(
+      url,
+      headers: {
+        "Accept": "application/json",
+        "Access-Control_Allow_Origin": "*",
+        "Authorization": "Bearer $token",
+      },
+      body: {
+        "name": name,
+      },
+    );
+    return response;
+  }
+
+  Future<Response> deleteCategory(Category category) async {
+    final url = Uri.parse(_baseUrl + 'category/${category.id}');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    final headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + '$token',
+    };
+
+    final response = await delete(url, headers: headers);
+    return response;
+  }
+
+  Future<Response> editCategory(Category category, String name) async {
+    final url = Uri.parse(_baseUrl + 'category/${category.id}');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    final body = {
+      'name': name,
+    };
+    final headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + '$token',
+    };
+
+    final response = await put(url, body: body, headers: headers);
+
+    print(response.body);
+    print(response.statusCode);
+    return response;
   }
 }
